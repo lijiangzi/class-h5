@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        .wrapper {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            justify-content: space-around;
+        }
+
+        .area,
+        .sex {
+            width: 500px;
+            height: 500px;
+            border: 1px solid black;
+        }
+    </style>
+    <script src="./echarts.js"></script>
+    <script src="./jquery-3.3.1.js"></script>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="area"></div>
+        <div class="sex"></div>
+    </div>
+
+    <script>
+        var areaChart = echarts.init($('.area')[0]);
+        var sexChart = echarts.init($('.sex')[0]);
+
+        var areaOption;
+
+        function setOption(data, dataObj) {
+            return {
+                title: { //主标题
+                    text: '苏大学子来源',
+                    subtext: '纯属虚构', //副标题
+                    x: 'center'
+                },
+                tooltip: {
+                    trigger: 'item',
+                    formatter: "{a} <br/>{b} : {c} ({d}%)"
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left',
+                    data: data,
+                },
+                series: [{
+                    name: '访问来源',
+                    type: 'pie',
+                    radius: '55%',
+                    center: ['50%', '60%'],
+                    data: dataObj,
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }]
+            }
+        }
+        $.ajax({
+            type: 'GET',
+            data: {
+                'appkey': 'dongmeiqi_1547441744650'
+            },
+            dataType: 'json',
+            url: 'http://api.duyiedu.com/api/student/findAll',
+            success(res) {
+                var dataList = res.data;
+                console.log(dataList);
+                var dataObj = {};
+                var maleNum = 0;
+                var femaleNum = 0;
+                dataList.forEach((ele) => {
+
+                    if (ele.sex == 0) {
+                        maleNum++;
+                    } else {
+                        femaleNum++
+                    }
+
+                    if (!dataObj[ele.address]) {
+                        dataObj[ele.address] = 1;
+                    } else {
+                        dataObj[ele.address]++
+                    }
+
+                })
+                console.log(maleNum, femaleNum);
+                var sexData = ['男','女']
+                var sexDataObj = [{
+                        name: "男",
+                        value: maleNum
+                    },
+                    {
+                        name: '女',
+                        value: femaleNum
+                    }
+                ]
+
+                console.log(dataObj);
+                var areaData = [];
+                for (prop in dataObj) {
+                    areaData.push(prop)
+                }
+                console.log(areaData);
+
+                var areaDataObj = [];
+                for (prop in dataObj) {
+                    var obj = {};
+                    obj.name = prop;
+                    obj.value = dataObj[prop];
+                    areaDataObj.push(obj)
+                }
+                console.log(areaDataObj);
+                areaOption = setOption(areaData, areaDataObj)
+                sexOption = setOption(sexData, sexDataObj)
+                areaChart.setOption(areaOption)
+                sexChart.setOption(sexOption)
+
+            }
+        })
+    </script>
+</body>
+
+</html>
