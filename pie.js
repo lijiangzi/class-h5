@@ -101,7 +101,7 @@
             seriesArr = [{ value: numObj[0], name: '男' }, { value: numObj[1], name: '女' }];
             this.option.legend.data = legendArr;
             this.option.series[0].data = seriesArr;
-            this.option.title.text = '渡一教育学生性别统计';
+            this.option.title.text = '苏州大学学生性别统计';
             this.option.series[0].name = '性别分布';
             mySexChart.setOption(this.option);
         }
