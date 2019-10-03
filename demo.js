@@ -16,7 +16,6 @@
             });
             $('.list-item').on('click', function () {
                 $('.list-item.active').removeClass('active');
-
                 $(this).addClass('active');
                 $('.drop-list').slideUp();
                 location.hash = $(this).attr('data-id');

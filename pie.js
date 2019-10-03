@@ -6,7 +6,7 @@
                 title: {
                     // text: '某站点用户访问来源',
                     text: '',
-                    subtext: '纯属虚构',
+                    subtext: '',
                     x: 'center'
                 },
                 tooltip: {
@@ -49,7 +49,7 @@
         getData: function () {
             var self = this;
             $.ajax({
-                url: 'http://api.duyiedu.com/api/student/findAll?appkey=dongmeiqi_1547441744650',
+                url: 'http://api.duyiedu.com/api/student/findAll?appkey=haizeiwang_1554459899292',
                 success: function (data) {
                     var data = JSON.parse(data);
                     // console.log(data);

@@ -5,16 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-    <title>苏州大学学生管理系统</title>
-    <link rel="stylesheet" href="./demo.css">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <title>学生管理系统H5版</title>
+    <link rel="stylesheet" href="./index.css">
+    <link rel="icon" href="./images/suda.ico">
 </head>
 
 <body>
     <div class="wrapper">
         <header>
             <div class="logo">
-                <img src="./images/logo.png" alt="渡一教育">
+                <img src="./images/suda.jpg" alt="苏州大学">
                 <span class="du">苏</span>
                 <span class="yi">州</span>
                 <span class="jiao">大</span>
@@ -40,12 +41,16 @@
             <div class="list">
                 <h class="title disabled">学生管理</h>
                 <ul class="list-group" id="list-group">
+                    <li class="s-add list-item student-echarts active" data-id="student-echarts">
+                        <a href="javascript:;">学生统计</a>
+                    </li>
                     <li class="s-list list-item student-list" data-id="student-list">
                         <a href="#">学生列表</a>
                     </li>
                     <li class="s-add list-item student-add" data-id="student-add">
                         <a href="#">新增学生</a>
                     </li>
+
                 </ul>
             </div>
         </div>
@@ -57,13 +62,9 @@
             <div class="tab-content-item s-list" id="student-list">
                 <div class="search-wrap">
                     <label for="search-inp">
-                        搜索：
+                        学号搜索：
                     </label>
-                    <input type="text" placeholder="请输入学号或姓名或地区" class="inp">
-                    <input type="radio" name="sex" value="0" data-sex="0">
-                    <label for="">男</label>
-                    <input type="radio" name="sex" value="1" data-sex="1">
-                    <label for="">女</label>
+                    <input type="text" placeholder="请输入学号" class="inp">
                     <button class="search-btn">搜索</button>
                 </div>
                 <table id="students-table" border="0" cellspacing="0" cellpadding="0">
@@ -190,7 +191,7 @@
             </div>
         </div>
     </div>
-    <script src="./jquery-3.3.1.js"></script>
+    <script src="./jquery.min.js"></script>
     <script src="./echarts.js"></script>
     <script src="./index.js"></script>
     <script src="./demo.js"></script>

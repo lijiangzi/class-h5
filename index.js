@@ -11,9 +11,16 @@
             // 当页面hash值改变时 右侧内容显示变化
             $(window).on('hashchange', function () {
                 var hash = location.hash;
-                // console.log(hash)
+               
+                //当我们点击的是网页的前进和后退按钮时，要进行相应的样式的修改。
+                var nowClass = hash.replace('#', '.');
+                $('.list-item.active').removeClass('active');
+                $(nowClass).addClass('active');
+
                 $('.show-list').removeClass('show-list');
                 $(hash).addClass('show-list');
+                
+
             });
             $('.student-list').on('click', function () {
                 self.getAllData();
@@ -22,6 +29,7 @@
             $('#submit-add').on('click', function () {
                 var data = self.getFormData($('#student-form'));
                 self.newAddStudent(data);
+
             });
             // 点击搜索按钮
             $('.search-btn').on('click', function () {
@@ -32,19 +40,25 @@
             var self = this;
             var val = $('.inp').val();
             var sex = $('.search-wrap input:radio:checked').val();
-            if (!val) {
-                alert('请填入搜索内容');
-                return;
-            }
-            sex = sex || 0;
+            // if (!val) {
+            //     alert('请填入搜索内容');
+            //     return;
+            // }
+            sex = sex || -1;
             var page = 1;
             var size = this.size;
             $.ajax({
-                url: 'http://api.duyiedu.com/api/student/searchStudent?appkey=dongmeiqi_1547441744650',
-                data: { sex: sex, search: val, page: page, size: size },
+                url: 'http://api.duyiedu.com/api/student/searchStudent?appkey=haizeiwang_1554459899292',
+                data: { sex: sex , search: val, page: page, size: size },
                 success: function (data) {
                     var list = JSON.parse(data)
+                    // console.log(list);
+                    if(!list.data.searchList[0]){
+                        alert('查无此人，请检查你的学号')
+                        return 
+                    }
                     self.renderDom(list.data.searchList);
+
                 },
                 error: function () {
                     console.log('error');
@@ -53,7 +67,7 @@
         },
         newAddStudent: function (data) {
             $.ajax({
-                url: 'http://api.duyiedu.com/api/student/addStudent?appkey=dongmeiqi_1547441744650',
+                url: 'http://api.duyiedu.com/api/student/addStudent?appkey=haizeiwang_1554459899292',
                 data: data,
                 success: function () {
                     alert('新增成功');
@@ -67,7 +81,7 @@
         getAllData: function () {
             var self = this;
             $.ajax({
-                url: 'http://api.duyiedu.com/api/student/findAll?appkey=dongmeiqi_1547441744650',
+                url: 'http://api.duyiedu.com/api/student/findAll?appkey=haizeiwang_1554459899292',
                 beforeSend: function () {
                     $('tbody').html('<p>正在加载中...</p>');
                 },
@@ -123,7 +137,7 @@
                     // console.log(data);
                     // 发送修改后的数据到后端
                     $.ajax({
-                        url: 'http://api.duyiedu.com/api/student/updateStudent?appkey=dongmeiqi_1547441744650',
+                        url: 'http://api.duyiedu.com/api/student/updateStudent?appkey=haizeiwang_1554459899292',
                         data: data,
                         success: function (data) {
                             $('.modal').hide();
@@ -145,7 +159,7 @@
                 var num = self.dataList.data[i].sNo;
                 $('.sure-btn').on('click', function () {
                     $.ajax({
-                        url: 'http://api.duyiedu.com/api/student/delBySno?appkey=dongmeiqi_1547441744650',
+                        url: 'http://api.duyiedu.com/api/student/delBySno?appkey=haizeiwang_1554459899292',
                         data: { sNo: num },
                         success: function (data) {
                             $('.del-modal').hide();
